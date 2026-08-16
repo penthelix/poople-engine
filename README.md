@@ -21,10 +21,10 @@ uv --version
 uv sync
 ```
 
-4. Use mypy to check type hints.
+4. Use basedpyright to check type hints.
 
 ```bash
-uv run mypy .
+uv run basedpyright
 ```
 
 5. Run tests.
