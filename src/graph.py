@@ -1,3 +1,5 @@
+from collections.abc import Iterator
+from pathlib import Path
 from typing import cast
 
 import numpy as np
@@ -56,3 +58,11 @@ def is_one_char_away(w1: str, w2: str) -> bool:
         if diff > 1:
             return False
     return True
+
+
+def word(file: Path) -> Iterator[str]:
+    if not file.exists():
+        raise FileNotFoundError(f"File {file} does not exist.")
+    with open(file, "r") as f:
+        for line in f:
+            yield line.strip()
