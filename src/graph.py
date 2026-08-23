@@ -41,3 +41,18 @@ class Graph:
             raise ValueError("Edge does not exist.")
         self.matrix[x, y] = 0
         self.matrix[y, x] = 0
+
+
+def is_one_char_away(w1: str, w2: str) -> bool:
+    if len(w1) != len(w2):
+        raise ValueError("Words must be of same length.")
+    if w1 == w2:
+        raise ValueError("Words must be different.")
+
+    diff = 0
+    for c1, c2 in w1, w2:
+        if c1 != c2:
+            diff += 1
+        if diff > 1:
+            return False
+    return True
