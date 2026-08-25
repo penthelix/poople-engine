@@ -10,18 +10,30 @@ class Graph:
     """
     A graph represented as an adjacency matrix.
     """
-    def __init__(self, dims: tuple[int, int]) -> None:
-        self.dims: tuple[int, int] = dims
-        self.matrix: npt.NDArray[np.bool_] = np.zeros(dims, dtype=bool)
+
+    def __init__(self, dims: int) -> None:
+        """
+        Creates a square adjaceny matrix of shape (dims, dims) filled with zeros.
+
+        Args:
+            dims: The number of dimensions of the matrix.
+
+        Raises:
+            ValueError: If the dimensions are less than 1.
+        """
+        if dims < 1:
+            raise ValueError("Dimensions must be positive.")
+        self.dims: int = dims
+        self.matrix: npt.NDArray[np.bool_] = np.zeros((dims, dims), dtype=bool)
 
     def _validate_indices(self, x: int, y: int) -> bool:
         """
-        Check if the indices are valid.
+        Check if the indices are valid when accessing the matrix.
 
         Raises:
             IndexError: If the indices are out of bounds or negative.
         """
-        if x > self.dims[0] or y > self.dims[1]:
+        if x > self.dims or y > self.dims:
             raise IndexError("Index out of bounds.")
         if x < 0 or y < 0:
             raise IndexError("Index cannot be negative.")
@@ -30,12 +42,7 @@ class Graph:
     def _check_symmetry(self) -> bool:
         """
         Check if the matrix is symmetric.
-
-        Raises:
-            ValueError: If the matrix is not square.
         """
-        if self.dims[0] != self.dims[1]:
-            raise ValueError("Matrix is not square.")
         return np.array_equal(self.matrix, self.matrix.T)
 
     def are_connected(self, x: int, y: int) -> bool:
