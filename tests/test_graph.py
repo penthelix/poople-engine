@@ -9,6 +9,8 @@ class TestGraph:
     def test_validate_indices(self):
         graph = Graph(dims=2)
         with raises(IndexError):
+            _ = graph._validate_indices(2, 2)
+        with raises(IndexError):
             _ = graph._validate_indices(2, 4)
         with raises(IndexError):
             _ = graph._validate_indices(3, 3)
