@@ -33,7 +33,7 @@ class Graph:
         Raises:
             IndexError: If the indices are out of bounds or negative.
         """
-        if x > self.dims or y > self.dims:
+        if x >= self.dims or y >= self.dims:
             raise IndexError("Index out of bounds.")
         if x < 0 or y < 0:
             raise IndexError("Index cannot be negative.")
