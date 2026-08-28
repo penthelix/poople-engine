@@ -109,8 +109,9 @@ def is_one_char_away(w1: str, w2: str) -> bool:
     """
     if len(w1) != len(w2):
         raise ValueError("Words must be of same length.")
+
     if w1 == w2:
-        raise ValueError("Words must be different.")
+        return False
 
     diff = 0
     for c1, c2 in zip(w1, w2):
