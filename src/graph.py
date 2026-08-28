@@ -5,6 +5,8 @@ from typing import cast
 import numpy as np
 import numpy.typing as npt
 
+from src.utils import PROJECT_ROOT
+
 
 class Graph:
     """
@@ -131,3 +133,33 @@ def word(file: Path) -> Iterator[str]:
     with open(file, "r") as f:
         for line in f:
             yield line.strip()
+
+
+def build_graph(in_path: Path):
+    with open(in_path, "rb") as f:
+        line_count = sum([1 for _ in f])
+
+    graph = Graph(dims=line_count)
+    words = list(word(in_path))
+
+    for i, w1 in enumerate(words):
+        for j, w2 in enumerate(words[i + 1 :]):
+            if is_one_char_away(w1, w2):
+                graph.add_edge(i, j)
+
+    return graph
+
+
+def save_graph(graph: Graph, out_path: Path):
+    np.savetxt(fname=out_path, X=graph.matrix)
+
+
+def main():
+    graph = build_graph(PROJECT_ROOT / "data" / "4_letter_words.txt")
+    save_graph(
+        graph=graph, out_path=Path(PROJECT_ROOT / "data" / "4_adjacency_graph.txt")
+    )
+
+
+if __name__ == "__main__":
+    main()
