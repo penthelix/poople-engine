@@ -2,7 +2,8 @@ from pathlib import Path
 
 from pytest import raises
 
-from src.data import WORD_LENGTH, filter_words_by_length
+from src.config import WORD_LENGTH
+from src.data import filter_words_by_length
 
 
 def test_main():

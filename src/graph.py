@@ -5,6 +5,7 @@ from typing import cast
 import numpy as np
 import numpy.typing as npt
 
+from src.config import WORD_LENGTH
 from src.utils import PROJECT_ROOT
 
 
@@ -155,9 +156,14 @@ def save_graph(graph: Graph, out_path: Path):
 
 
 def main():
-    graph = build_graph(PROJECT_ROOT / "data" / "4_letter_words.txt")
+    try:
+        graph = build_graph(PROJECT_ROOT / "data" / f"{WORD_LENGTH}_letter_words.txt")
+    except FileNotFoundError as e:
+        print(e)
+        return
     save_graph(
-        graph=graph, out_path=Path(PROJECT_ROOT / "data" / "4_adjacency_graph.txt")
+        graph=graph,
+        out_path=Path(PROJECT_ROOT / "data" / f"{WORD_LENGTH}_adjacency_graph.txt"),
     )
 
 

@@ -1,8 +1,7 @@
 from pathlib import Path
 
+from src.config import WORD_LENGTH
 from src.utils import PROJECT_ROOT
-
-WORD_LENGTH: int = 4
 
 
 def filter_words_by_length(
