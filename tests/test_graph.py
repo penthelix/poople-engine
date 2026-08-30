@@ -1,6 +1,8 @@
+from pathlib import Path
+
 from pytest import raises
 
-from src.graph import Graph
+from src.graph import Graph, is_one_char_away, word
 
 # pyright: reportPrivateUsage=false
 
@@ -62,3 +64,26 @@ class TestGraph:
 
         assert graph.matrix[0][1] == 0
         assert graph.matrix[1][0] == 0
+
+
+def test_is_one_char_away():
+    with raises(ValueError):
+        _ = is_one_char_away("abc", "abcd")
+
+    assert is_one_char_away("abc", "abd") == True
+    assert is_one_char_away("abc", "aac") == True
+    assert is_one_char_away("abc", "abc") == False
+
+
+def test_word(tmp_path: Path):
+    with raises(FileNotFoundError):
+        tmp_word_file: Path = tmp_path / "not_found.txt"
+        _ = list(word(tmp_word_file))
+
+    with raises(FileNotFoundError):
+        _ = list(word(tmp_path))
+
+    with open(tmp_path / "word.txt", "w+") as f:
+        _ = f.write("hello\nworld\n")
+        _ = f.seek(0)
+        assert list(word(Path(f.name))) == ["hello", "world"]
