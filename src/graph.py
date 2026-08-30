@@ -134,6 +134,9 @@ def word(file: Path) -> Iterator[str]:
     """
     if not file.exists():
         raise FileNotFoundError(f"File {file} does not exist.")
+    if not file.is_file():
+        raise FileNotFoundError(f"{file} is not a file.")
+
     with open(file, "r") as f:
         for line in f:
             yield line.strip()
