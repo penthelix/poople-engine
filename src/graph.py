@@ -142,7 +142,7 @@ def word(file: Path) -> Iterator[str]:
             yield line.strip()
 
 
-def build_graph(in_path: Path):
+def build_graph(in_path: Path) -> Graph:
     with open(in_path, "rb") as f:
         line_count = sum([1 for _ in f])
 
@@ -157,11 +157,11 @@ def build_graph(in_path: Path):
     return graph
 
 
-def save_graph(graph: Graph, out_path: Path):
+def save_graph(graph: Graph, out_path: Path) -> None:
     np.savetxt(fname=out_path, X=graph.matrix)
 
 
-def main():
+def main() -> None:
     try:
         graph = build_graph(PROJECT_ROOT / "data" / f"{WORD_LENGTH}_letter_words.txt")
     except FileNotFoundError as e:
