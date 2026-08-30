@@ -109,6 +109,9 @@ class Graph:
 def is_one_char_away(w1: str, w2: str) -> bool:
     """
     Check if two words are one character apart.
+
+    Raises:
+        ValueError: If the words are of different lengths.
     """
     if len(w1) != len(w2):
         raise ValueError("Words must be of same length.")
