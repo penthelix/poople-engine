@@ -169,7 +169,7 @@ def main() -> None:
         return
     save_graph(
         graph=graph,
-        out_path=Path(PROJECT_ROOT / "data" / f"{WORD_LENGTH}_adjacency_graph.txt"),
+        out_path=PROJECT_ROOT / "data" / f"{WORD_LENGTH}_letter",
     )
 
 
