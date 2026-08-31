@@ -4,6 +4,7 @@ from typing import cast
 
 import numpy as np
 import numpy.typing as npt
+from scipy.sparse.csgraph import shortest_path
 
 from src.config import WORD_LENGTH
 from src.utils import PROJECT_ROOT
@@ -28,6 +29,9 @@ class Graph:
             raise ValueError("Dimensions must be positive.")
         self.dims: int = dims
         self.matrix: npt.NDArray[np.bool_] = np.zeros((dims, dims), dtype=bool)
+
+        self.shortest_paths: npt.NDArray[np.float64] | None = None
+        self.predecessors: npt.NDArray[np.int32] | None = None
 
     def _validate_indices(self, x: int, y: int) -> bool:
         """
@@ -105,6 +109,11 @@ class Graph:
         self.matrix[x, y] = 0
         self.matrix[y, x] = 0
 
+    def calculate_shortest_paths(self):
+        self.shortest_paths, self.predecessors = shortest_path(
+            self.matrix, return_predecessors=True
+        )
+
 
 def is_one_char_away(w1: str, w2: str) -> bool:
     """
@@ -158,7 +167,12 @@ def build_graph(in_path: Path) -> Graph:
 
 
 def save_graph(graph: Graph, out_path: Path) -> None:
-    np.savetxt(fname=out_path, X=graph.matrix)
+    np.savetxt(fname=out_path.with_suffix(".matrix"), X=graph.matrix)
+
+    if graph.shortest_paths is None or graph.predecessors is None:
+        return
+    np.savetxt(fname=out_path.with_suffix(".paths"), X=graph.shortest_paths)
+    np.savetxt(fname=out_path.with_suffix(".predecessors"), X=graph.predecessors)
 
 
 def main() -> None:
@@ -167,6 +181,7 @@ def main() -> None:
     except FileNotFoundError as e:
         print(e)
         return
+    graph.calculate_shortest_paths()
     save_graph(
         graph=graph,
         out_path=PROJECT_ROOT / "data" / f"{WORD_LENGTH}_letter",
