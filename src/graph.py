@@ -145,10 +145,10 @@ def get_shortest_path(graph: Graph, start: int, end: int) -> list[str]:
         raise ValueError("No path exists between the two words.")
 
     path: list[int] = []
-    current = end
+    current: int = end
     while current != start:
         path.append(current)
-        current = graph.predecessors[start][current]
+        current = cast(int, graph.predecessors[start][current])
     path.append(start)
     path.reverse()
     return [id_to_word(i) for i in path]

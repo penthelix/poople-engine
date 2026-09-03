@@ -14,7 +14,7 @@ WORD_LENGTH: int = 4
 CORPUS_LENGTH: int = -1
 
 
-def set_word_length(len: int):
+def set_word_length(len: int) -> None:
     """
     Set the word length for the game. This will also reset the corpus length.
 
@@ -30,7 +30,7 @@ def set_word_length(len: int):
     set_corpus_length(-1)
 
 
-def set_corpus_length(len: int):
+def set_corpus_length(len: int) -> None:
     global CORPUS_LENGTH
     CORPUS_LENGTH = len
 
