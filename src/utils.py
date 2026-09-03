@@ -1,3 +1,4 @@
+import re
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -121,6 +122,15 @@ def word(file: Path) -> Iterator[str]:
     with open(file, "r") as f:
         for line in f:
             yield line.strip()
+
+
+def sanitize_word(word: str) -> str:
+    """
+    Sanitize a word by removing non-alphabetic characters and converting to lowercase.
+    """
+    word = word.lower()
+    word = re.sub(r"[^a-z]", "", word)
+    return word
 
 
 if __name__ == "__main__":
