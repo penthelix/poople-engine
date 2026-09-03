@@ -112,6 +112,14 @@ class Graph:
             self.matrix, return_predecessors=True
         )
 
+    def save_graph(self, out_path: Path) -> None:
+        np.savetxt(fname=out_path.with_suffix(".matrix"), X=self.matrix)
+
+        if self.shortest_paths is None or self.predecessors is None:
+            return
+        np.savetxt(fname=out_path.with_suffix(".paths"), X=self.shortest_paths)
+        np.savetxt(fname=out_path.with_suffix(".predecessors"), X=self.predecessors)
+
 
 def build_graph(in_path: Path) -> Graph:
     with open(in_path, "rb") as f:
@@ -126,15 +134,6 @@ def build_graph(in_path: Path) -> Graph:
                 graph.add_edge(i, j)
 
     return graph
-
-
-def save_graph(graph: Graph, out_path: Path) -> None:
-    np.savetxt(fname=out_path.with_suffix(".matrix"), X=graph.matrix)
-
-    if graph.shortest_paths is None or graph.predecessors is None:
-        return
-    np.savetxt(fname=out_path.with_suffix(".paths"), X=graph.shortest_paths)
-    np.savetxt(fname=out_path.with_suffix(".predecessors"), X=graph.predecessors)
 
 
 def get_shortest_path(graph: Graph, start: int, end: int) -> list[str]:
@@ -161,8 +160,7 @@ def main() -> None:
         print(e)
         return
     graph.calculate_shortest_paths()
-    save_graph(
-        graph=graph,
+    graph.save_graph(
         out_path=PROJECT_ROOT / "data" / f"{WORD_LEN}_letter",
     )
 
