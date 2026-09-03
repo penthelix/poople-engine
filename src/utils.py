@@ -1,6 +1,7 @@
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
+DATA_FOLDER: Path = PROJECT_ROOT / "data"
 ALL_WORDS_FILE: Path = PROJECT_ROOT / "data" / "all_words.txt"
 
 # Edit these directly.

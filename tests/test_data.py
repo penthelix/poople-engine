@@ -2,8 +2,8 @@ from pathlib import Path
 
 from pytest import raises
 
-from src.config import WORD_LENGTH
 from src.data import filter_words_by_length
+from src.utils import WORD_LENGTH
 
 
 def test_main():
@@ -15,7 +15,7 @@ def test_filter_words_by_length(tmp_path: Path):
     # Test validation checks
     test_in: Path = tmp_path / "test_in.md"
     with raises(FileNotFoundError):
-        _ = filter_words_by_length(test_in)
+        _ = filter_words_by_length(test_in, out_dir=tmp_path)
     with raises(NotADirectoryError):
         test_in.touch()
         _ = filter_words_by_length(test_in, out_dir=tmp_path / "test_file.md")
