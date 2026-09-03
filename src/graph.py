@@ -120,6 +120,22 @@ class Graph:
         np.savetxt(fname=out_path.with_suffix(".paths"), X=self.shortest_paths)
         np.savetxt(fname=out_path.with_suffix(".predecessors"), X=self.predecessors)
 
+    def get_shortest_path_idx(self, start: int, end: int) -> list[int]:
+        if self.shortest_paths is None or self.predecessors is None:
+            raise ValueError("Graph has not been calculated yet.")
+
+        if self.shortest_paths[start][end] == float("inf"):
+            raise ValueError("No path exists between the two words.")
+
+        path: list[int] = []
+        current: int = end
+        while current != start:
+            path.append(current)
+            current = cast(int, self.predecessors[start][current])
+        path.append(start)
+        path.reverse()
+        return path
+
 
 def build_graph(in_path: Path) -> Graph:
     with open(in_path, "rb") as f:
@@ -134,23 +150,6 @@ def build_graph(in_path: Path) -> Graph:
                 graph.add_edge(i, j)
 
     return graph
-
-
-def get_shortest_path(graph: Graph, start: int, end: int) -> list[str]:
-    if graph.shortest_paths is None or graph.predecessors is None:
-        raise ValueError("Graph has not been calculated yet.")
-
-    if graph.shortest_paths[start][end] == float("inf"):
-        raise ValueError("No path exists between the two words.")
-
-    path: list[int] = []
-    current: int = end
-    while current != start:
-        path.append(current)
-        current = cast(int, graph.predecessors[start][current])
-    path.append(start)
-    path.reverse()
-    return [id_to_word(i) for i in path]
 
 
 def main() -> None:
