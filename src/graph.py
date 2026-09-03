@@ -5,7 +5,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.utils import PROJECT_ROOT, WORD_LENGTH, id_to_word, is_one_char_away, word
+from src.utils import PROJECT_ROOT, WORD_LEN, id_to_word, is_one_char_away, word
 
 
 class Graph:
@@ -156,14 +156,14 @@ def get_shortest_path(graph: Graph, start: int, end: int) -> list[str]:
 
 def main() -> None:
     try:
-        graph = build_graph(PROJECT_ROOT / "data" / f"{WORD_LENGTH}_letter_words.txt")
+        graph = build_graph(PROJECT_ROOT / "data" / f"{WORD_LEN}_letter_words.txt")
     except FileNotFoundError as e:
         print(e)
         return
     graph.calculate_shortest_paths()
     save_graph(
         graph=graph,
-        out_path=PROJECT_ROOT / "data" / f"{WORD_LENGTH}_letter",
+        out_path=PROJECT_ROOT / "data" / f"{WORD_LEN}_letter",
     )
 
 

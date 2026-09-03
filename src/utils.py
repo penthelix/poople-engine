@@ -6,12 +6,12 @@ DATA_FOLDER: Path = PROJECT_ROOT / "data"
 ALL_WORDS_FILE: Path = PROJECT_ROOT / "data" / "all_words.txt"
 
 # Edit these directly.
-MAX_WORD_LENGTH: int = 10
-MIN_WORD_LENGTH: int = 3
+MAX_WORD_LEN: int = 10
+MIN_WORD_LEN: int = 3
 
 # Use setters.
-WORD_LENGTH: int = 4
-CORPUS_LENGTH: int = -1
+WORD_LEN: int = 4
+CORPUS_LEN: int = -1
 
 
 def set_word_length(len: int) -> None:
@@ -21,24 +21,24 @@ def set_word_length(len: int) -> None:
     Raises:
         ValueError: If the word length is not between MIN_WORD_LENGTH and MAX_WORD_LENGTH.
     """
-    if len < MIN_WORD_LENGTH or len > MAX_WORD_LENGTH:
+    if len < MIN_WORD_LEN or len > MAX_WORD_LEN:
         raise ValueError(
-            f"Word length must be between {MIN_WORD_LENGTH} and {MAX_WORD_LENGTH}"
+            f"Word length must be between {MIN_WORD_LEN} and {MAX_WORD_LEN}"
         )
-    global WORD_LENGTH
-    WORD_LENGTH = len
+    global WORD_LEN
+    WORD_LEN = len
     set_corpus_length(-1)
 
 
 def set_corpus_length(len: int) -> None:
-    global CORPUS_LENGTH
-    CORPUS_LENGTH = len
+    global CORPUS_LEN
+    CORPUS_LEN = len
 
 
 def filter_words_by_length(
     in_path: Path,
     out_dir: Path,
-    word_length: int = WORD_LENGTH,
+    word_length: int = WORD_LEN,
 ) -> int:
     """
     Gets words from a file, filters them by length, and writes them to a new file.

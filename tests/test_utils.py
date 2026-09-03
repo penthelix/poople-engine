@@ -4,7 +4,7 @@ from pytest import raises
 
 from src.utils import (
     PROJECT_ROOT,
-    WORD_LENGTH,
+    WORD_LEN,
     filter_words_by_length,
     is_one_char_away,
     word,
@@ -13,8 +13,8 @@ from src.utils import (
 
 def test_main():
     assert isinstance(PROJECT_ROOT, Path)
-    assert isinstance(WORD_LENGTH, int)
-    assert WORD_LENGTH > 0
+    assert isinstance(WORD_LEN, int)
+    assert WORD_LEN > 0
 
 
 def test_filter_words_by_length(tmp_path: Path):
