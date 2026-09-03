@@ -5,7 +5,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.utils import PROJECT_ROOT, WORD_LEN, id_to_word, is_one_char_away, word
+from src.utils import PROJECT_ROOT, WORD_LEN, is_one_char_away, word
 
 
 class Graph:
@@ -54,10 +54,6 @@ class Graph:
         """
         Check if two nodes are connected.
 
-        Args:
-            x: The first node.
-            y: The second node.
-
         Returns:
             bool: True if the nodes are connected, False otherwise.
         """
@@ -78,13 +74,9 @@ class Graph:
         row = cast(npt.NDArray[np.bool_], self.matrix[x])
         return np.where(row)[0].tolist()
 
-    def add_edge(self, x: int, y: int):
+    def add_edge(self, x: int, y: int) -> None:
         """
         Add an edge between two nodes.
-
-        Args:
-            x: The first node.
-            y: The second node.
         """
         _ = self._validate_indices(x, y)
         self.matrix[x, y] = 1
@@ -93,10 +85,6 @@ class Graph:
     def remove_edge(self, x: int, y: int) -> None:
         """
         Remove an edge between two nodes.
-
-        Args:
-            x: The first node.
-            y: The second node.
 
         Raises:
             ValueError: If the edge does not exist.
@@ -107,12 +95,25 @@ class Graph:
         self.matrix[x, y] = 0
         self.matrix[y, x] = 0
 
-    def calculate_shortest_paths(self):
+    def calculate_shortest_paths(self) -> None:
+        """
+        Calculate the shortest paths between all nodes in the graph and store the results in the
+        `shortest_paths` and `predecessors` attributes.
+
+        Uses scipy.sparse.csgraph.shortest_path
+        """
         self.shortest_paths, self.predecessors = shortest_path(
             self.matrix, return_predecessors=True
         )
 
     def save_graph(self, out_path: Path) -> None:
+        """
+        Save the graph to a file.
+
+        The adjacency matrix, the shortest paths, and the predecessors
+        are saved to separate files. If either of the shortest paths and predecessors are not
+        calculated, both are not saved.
+        """
         np.savetxt(fname=out_path.with_suffix(".matrix"), X=self.matrix)
 
         if self.shortest_paths is None or self.predecessors is None:
@@ -138,6 +139,9 @@ class Graph:
 
 
 def build_graph(in_path: Path) -> Graph:
+    """
+    Build a graph from a file. The file should contain one word per line.
+    """
     with open(in_path, "rb") as f:
         line_count = sum([1 for _ in f])
 
