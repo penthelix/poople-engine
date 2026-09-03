@@ -1,1 +1,0 @@
-WORD_LENGTH: int = 4

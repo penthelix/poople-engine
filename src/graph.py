@@ -6,8 +6,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.config import WORD_LENGTH
-from src.utils import PROJECT_ROOT
+from src.utils import PROJECT_ROOT, WORD_LENGTH
 
 
 class Graph:
