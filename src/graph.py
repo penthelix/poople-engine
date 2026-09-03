@@ -1,4 +1,3 @@
-from collections.abc import Iterator
 from pathlib import Path
 from typing import cast
 
@@ -6,7 +5,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.utils import ALL_WORDS_FILE, PROJECT_ROOT, WORD_LENGTH
+from src.utils import PROJECT_ROOT, WORD_LENGTH, id_to_word, is_one_char_away, word
 
 
 class Graph:
@@ -112,56 +111,6 @@ class Graph:
         self.shortest_paths, self.predecessors = shortest_path(
             self.matrix, return_predecessors=True
         )
-
-
-def is_one_char_away(w1: str, w2: str) -> bool:
-    """
-    Check if two words are one character apart.
-
-    Raises:
-        ValueError: If the words are of different lengths.
-    """
-    if len(w1) != len(w2):
-        raise ValueError("Words must be of same length.")
-
-    if w1 == w2:
-        return False
-
-    diff = 0
-    for c1, c2 in zip(w1, w2):
-        if c1 != c2:
-            diff += 1
-        if diff > 1:
-            return False
-    return True
-
-
-def id_to_word(id: int) -> str:
-    """
-    Convert word ID i.e. its line number in data/all_words.txt to the word itself.
-
-    Raises:
-        ValueError: If the word ID is not found.
-    """
-    with open(ALL_WORDS_FILE, "r") as f:
-        for i, line in enumerate(f):
-            if i == id:
-                return line.strip()
-    raise ValueError(f"Word ID {id} not found.")
-
-
-def word(file: Path) -> Iterator[str]:
-    """
-    Generator to read words from a file.
-    """
-    if not file.exists():
-        raise FileNotFoundError(f"File {file} does not exist.")
-    if not file.is_file():
-        raise FileNotFoundError(f"{file} is not a file.")
-
-    with open(file, "r") as f:
-        for line in f:
-            yield line.strip()
 
 
 def build_graph(in_path: Path) -> Graph:
