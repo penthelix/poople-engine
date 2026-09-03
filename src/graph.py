@@ -6,7 +6,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.utils import PROJECT_ROOT, WORD_LENGTH
+from src.utils import ALL_WORDS_FILE, PROJECT_ROOT, WORD_LENGTH
 
 
 class Graph:
@@ -136,6 +136,20 @@ def is_one_char_away(w1: str, w2: str) -> bool:
     return True
 
 
+def id_to_word(id: int) -> str:
+    """
+    Convert word ID i.e. its line number in data/all_words.txt to the word itself.
+
+    Raises:
+        ValueError: If the word ID is not found.
+    """
+    with open(ALL_WORDS_FILE, "r") as f:
+        for i, line in enumerate(f):
+            if i == id:
+                return line.strip()
+    raise ValueError(f"Word ID {id} not found.")
+
+
 def word(file: Path) -> Iterator[str]:
     """
     Generator to read words from a file.
@@ -172,6 +186,23 @@ def save_graph(graph: Graph, out_path: Path) -> None:
         return
     np.savetxt(fname=out_path.with_suffix(".paths"), X=graph.shortest_paths)
     np.savetxt(fname=out_path.with_suffix(".predecessors"), X=graph.predecessors)
+
+
+def get_shortest_path(graph: Graph, start: int, end: int) -> list[str]:
+    if graph.shortest_paths is None or graph.predecessors is None:
+        raise ValueError("Graph has not been calculated yet.")
+
+    if graph.shortest_paths[start][end] == float("inf"):
+        raise ValueError("No path exists between the two words.")
+
+    path: list[int] = []
+    current = end
+    while current != start:
+        path.append(current)
+        current = graph.predecessors[start][current]
+    path.append(start)
+    path.reverse()
+    return [id_to_word(i) for i in path]
 
 
 def main() -> None:
