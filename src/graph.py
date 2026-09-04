@@ -151,7 +151,7 @@ def build_graph(in_path: Path) -> Graph:
     for i, w1 in enumerate(words):
         for j, w2 in enumerate(words[i + 1 :]):
             if is_one_char_away(w1, w2):
-                graph.add_edge(i, j)
+                graph.add_edge(i, i + j + 1)
 
     return graph
 
