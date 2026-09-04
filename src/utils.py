@@ -1,5 +1,4 @@
 import re
-from collections.abc import Iterator
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -110,18 +109,22 @@ def id_to_word(id: int) -> str:
     raise ValueError(f"Word ID {id} not found.")
 
 
-def word(file: Path) -> Iterator[str]:
+def get_words(file: Path, sort: bool = False) -> list[str]:
     """
-    Generator to read words from a file.
+    Returns a list of words from a file.
     """
     if not file.exists():
         raise FileNotFoundError(f"File {file} does not exist.")
     if not file.is_file():
         raise FileNotFoundError(f"{file} is not a file.")
 
+    words: set[str] = set()
     with open(file, "r") as f:
         for line in f:
-            yield line.strip()
+            words.add(line.strip())
+    if sort:
+        return sorted(words)
+    return list(words)
 
 
 def sanitize_word(word: str) -> str:

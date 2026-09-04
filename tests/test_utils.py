@@ -6,8 +6,8 @@ from src.utils import (
     PROJECT_ROOT,
     WORD_LEN,
     filter_words_by_length,
+    get_words,
     is_one_char_away,
-    word,
 )
 
 
@@ -56,12 +56,12 @@ def test_is_one_char_away():
 def test_word(tmp_path: Path):
     with raises(FileNotFoundError):
         tmp_word_file: Path = tmp_path / "not_found.txt"
-        _ = list(word(tmp_word_file))
+        _ = get_words(tmp_word_file)
 
     with raises(FileNotFoundError):
-        _ = list(word(tmp_path))
+        _ = get_words(tmp_path)
 
     with open(tmp_path / "word.txt", "w+") as f:
         _ = f.write("hello\nworld\n")
         _ = f.seek(0)
-        assert list(word(Path(f.name))) == ["hello", "world"]
+        assert get_words(Path(f.name)) == ["hello", "world"]

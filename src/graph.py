@@ -5,7 +5,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.utils import PROJECT_ROOT, WORD_LEN, is_one_char_away, word
+from src.utils import PROJECT_ROOT, WORD_LEN, get_words, is_one_char_away
 
 
 class Graph:
@@ -146,7 +146,7 @@ def build_graph(in_path: Path) -> Graph:
         line_count = sum([1 for _ in f])
 
     graph = Graph(dims=line_count)
-    words = list(word(in_path))
+    words = get_words(in_path)
 
     for i, w1 in enumerate(words):
         for j, w2 in enumerate(words[i + 1 :]):
