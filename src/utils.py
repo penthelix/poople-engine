@@ -39,7 +39,7 @@ def filter_words_by_length(
     in_path: Path,
     out_dir: Path,
     word_length: int = WORD_LEN,
-) -> int:
+) -> tuple[int, Path]:
     """
     Gets words from a file, filters them by length, and writes them to a new file.
 
@@ -70,7 +70,7 @@ def filter_words_by_length(
             if word_length == len(line.strip()):
                 out_line_count += 1
                 _ = fout.write(line)
-    return out_line_count
+    return (out_line_count, out_path)
 
 
 def is_one_char_away(w1: str, w2: str) -> bool:
@@ -133,7 +133,7 @@ def sanitize_word(word: str) -> str:
 
 
 if __name__ == "__main__":
-    lines = filter_words_by_length(
+    lines, _ = filter_words_by_length(
         in_path=CORPUS_FILE,
         out_dir=DATA_FOLDER,
     )
