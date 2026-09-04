@@ -95,18 +95,26 @@ def is_one_char_away(w1: str, w2: str) -> bool:
     return True
 
 
-def id_to_word(id: int) -> str:
+def lnum_to_word(lnum: int, file: Path) -> str:
     """
-    Convert word ID i.e. its line number in CORPUS_FILE to the word itself.
-
-    Raises:
-        ValueError: If the word ID is not found.
+    Convert word line number in a file to the word itself.
     """
-    with open(CORPUS_FILE, "r") as f:
+    with open(file, "r") as f:
         for i, line in enumerate(f):
-            if i == id:
+            if i == lnum:
                 return line.strip()
-    raise ValueError(f"Word ID {id} not found.")
+    raise ValueError(f"Word at line {lnum} not found.")
+
+
+def word_to_lnum(word: str, file: Path) -> int:
+    """
+    Convert word to its line number in a file.
+    """
+    with open(file, "r") as f:
+        for i, line in enumerate(f):
+            if line.strip() == word:
+                return i
+    raise ValueError(f"Word {word} not found.")
 
 
 def get_words(file: Path, sort: bool = False) -> list[str]:
