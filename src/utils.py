@@ -111,18 +111,16 @@ def id_to_word(id: int) -> str:
 
 def get_words(file: Path, sort: bool = False) -> list[str]:
     """
-    Returns a list of words from a file.
+    Returns a list of words from a file without duplicates.
     """
     if not file.is_file():
         raise FileNotFoundError(f"{file} was not found.")
 
-    words: set[str] = set()
     with open(file, "r") as f:
-        for line in f:
-            words.add(line.strip())
+        words = [line.strip() for line in f]
     if sort:
         return sorted(words)
-    return list(words)
+    return words
 
 
 def sanitize_word(word: str) -> str:
