@@ -4,7 +4,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_FOLDER: Path = PROJECT_ROOT / "data"
-ALL_WORDS_FILE: Path = PROJECT_ROOT / "data" / "all_words.txt"
+CORPUS_FILE: Path = PROJECT_ROOT / "data" / "all_words.txt"
 
 # Edit these directly.
 MAX_WORD_LEN: int = 10
@@ -98,12 +98,12 @@ def is_one_char_away(w1: str, w2: str) -> bool:
 
 def id_to_word(id: int) -> str:
     """
-    Convert word ID i.e. its line number in data/all_words.txt to the word itself.
+    Convert word ID i.e. its line number in CORPUS_FILE to the word itself.
 
     Raises:
         ValueError: If the word ID is not found.
     """
-    with open(ALL_WORDS_FILE, "r") as f:
+    with open(CORPUS_FILE, "r") as f:
         for i, line in enumerate(f):
             if i == id:
                 return line.strip()
@@ -135,7 +135,7 @@ def sanitize_word(word: str) -> str:
 
 if __name__ == "__main__":
     lines = filter_words_by_length(
-        in_path=ALL_WORDS_FILE,
+        in_path=CORPUS_FILE,
         out_dir=DATA_FOLDER,
     )
     set_corpus_length(lines)
