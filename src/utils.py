@@ -55,7 +55,7 @@ def filter_words_by_length(
     Returns:
         The number of words written to the output file.
     """
-    if not in_path.exists() or not in_path.is_file():
+    if not in_path.is_file():
         raise FileNotFoundError(f"{in_path} was not found.")
     if not out_dir.is_dir():
         raise NotADirectoryError(f"{out_dir} must be a directory.")
@@ -113,10 +113,8 @@ def get_words(file: Path, sort: bool = False) -> list[str]:
     """
     Returns a list of words from a file.
     """
-    if not file.exists():
-        raise FileNotFoundError(f"File {file} does not exist.")
     if not file.is_file():
-        raise FileNotFoundError(f"{file} is not a file.")
+        raise FileNotFoundError(f"{file} was not found.")
 
     words: set[str] = set()
     with open(file, "r") as f:
