@@ -44,7 +44,7 @@ class Graph:
             raise IndexError("Index cannot be negative.")
         return True
 
-    def _check_symmetry(self) -> bool:
+    def is_symmetric(self) -> bool:
         """
         Check if the matrix is symmetric.
         """

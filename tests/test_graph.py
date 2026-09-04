@@ -19,10 +19,10 @@ class TestGraph:
         graph = Graph(dims=3)
         graph.matrix[0][1] = 1
         graph.matrix[1][0] = 1
-        assert graph._check_symmetry() == True
+        assert graph.is_symmetric() == True
 
         graph.matrix[0][2] = 1
-        assert graph._check_symmetry() == False
+        assert graph.is_symmetric() == False
 
     def test_are_connected(self):
         graph = Graph(dims=3)
