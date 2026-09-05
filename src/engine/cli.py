@@ -1,7 +1,7 @@
 import typer
 
-from src.graph import Graph, build_graph
-from src.utils import (
+from engine.graph import Graph, build_graph
+from engine.utils import (
     CORPUS_FILE,
     DATA_FOLDER,
     filter_words_by_length,

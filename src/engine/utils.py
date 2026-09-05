@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).parent.parent
+PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATA_FOLDER: Path = PROJECT_ROOT / "data"
 CORPUS_FILE: Path = PROJECT_ROOT / "data" / "all_words.txt"
 

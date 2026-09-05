@@ -5,7 +5,7 @@ import numpy as np
 import numpy.typing as npt
 from scipy.sparse.csgraph import shortest_path
 
-from src.utils import PROJECT_ROOT, WORD_LEN, get_words, is_one_char_away
+from engine.utils import PROJECT_ROOT, WORD_LEN, get_words, is_one_char_away
 
 
 class Graph:
