@@ -11,7 +11,7 @@ from engine.utils import (
 )
 
 
-def main(start_word: str, target_word: str = "poop"):
+def cli(start_word: str, target_word: str = "poop"):
     start_word = sanitize_word(start_word)
     word_len: int = len(start_word)
     _, word_len_file = filter_words_by_length(
@@ -32,5 +32,5 @@ def main(start_word: str, target_word: str = "poop"):
     print(" -> ".join(path))
 
 
-if __name__ == "__main__":
-    typer.run(main)
+def main():
+    typer.run(cli)
