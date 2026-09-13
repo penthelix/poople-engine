@@ -56,3 +56,9 @@ uv run poople <start_word> # Use --target-word to specify an optional target wor
 uv run pytest
 uv run basedpyright
 ```
+
+6. Compile to an executable.
+
+```bash
+uv run build
+```
