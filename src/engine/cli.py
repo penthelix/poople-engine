@@ -34,3 +34,7 @@ def cli(start_word: str, target_word: str = "poop"):
 
 def main():
     typer.run(cli)
+
+
+if __name__ == "__main__":
+    main()
