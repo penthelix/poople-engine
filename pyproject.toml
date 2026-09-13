@@ -9,7 +9,10 @@ dependencies = [
     "scipy>=1.18.1",
     "typer>=0.27.2",
 ]
-scripts = { poople = "engine.cli:main" }
+
+[project.scripts]
+poople = "engine.cli:main"
+build = "engine.build:main"
 
 [dependency-groups]
 dev = [
@@ -18,3 +21,6 @@ dev = [
     "pytest>=9.1.1",
     "scipy-stubs>=1.18.1.0",
 ]
+
+[tool.uv]
+package = true

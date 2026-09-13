@@ -1,7 +1,12 @@
 import re
+import sys
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).parent.parent.parent
+if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+    PROJECT_ROOT = Path(__file__).parent.parent
+else:
+    PROJECT_ROOT = Path(__file__).parent.parent.parent
+
 DATA_FOLDER: Path = PROJECT_ROOT / "data"
 CORPUS_FILE: Path = PROJECT_ROOT / "data" / "all_words.txt"
 
